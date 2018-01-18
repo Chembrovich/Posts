@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Posts</string>
+    <string name="log_button_title">LOG</string>
+    <string name="post_title">laudantium voluptate suscipit sunt enim enim</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

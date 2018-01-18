@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="post_id_size">17sp</dimen>
+    <dimen name="post_title_size">13sp</dimen>
+    <dimen name="post_padding">3dp</dimen>
+    <dimen name="post_marging">3dp</dimen>
+</resources>
