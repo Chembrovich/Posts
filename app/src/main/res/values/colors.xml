@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorPostBackground">#6aa9fb</color>
     <color name="colorPostText">#000000</color>
+    <color name="colorSelectedDot">#263238</color>
 </resources>

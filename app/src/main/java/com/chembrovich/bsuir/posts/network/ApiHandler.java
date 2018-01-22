@@ -38,7 +38,7 @@ public class ApiHandler {
 
             @Override
             public void onFailure(Call<List<Post>> call, Throwable t) {
-                
+
             }
         });
     }

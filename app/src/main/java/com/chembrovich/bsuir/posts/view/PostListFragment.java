@@ -9,6 +9,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.chembrovich.bsuir.posts.R;
 import com.chembrovich.bsuir.posts.presenter.PostListPresenter;
@@ -37,14 +41,39 @@ public class PostListFragment extends Fragment implements PostListFragmentInterf
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_list, container, false);
 
+        final Button logButton = view.findViewById(R.id.log_button);
+        logButton.setVisibility(View.INVISIBLE);
+
         presenter = new PostListPresenter(this);
         presenter.makeRequestToGetPosts();
 
         ViewPager viewPager = view.findViewById(R.id.pager);
+
         viewPagerAdapter = new ViewPagerAdapter(this.getContext(), presenter);
         viewPager.setAdapter(viewPagerAdapter);
-        TabLayout tabLayout = view.findViewById(R.id.tabDots);
+
+        TabLayout tabLayout = view.findViewById(R.id.tab_dots);
         tabLayout.setupWithViewPager(viewPager, true);
+
+        ImageView imageView = view.findViewById(R.id.image);
+        Animation animation = AnimationUtils.loadAnimation(this.getContext(), R.anim.rotate_image);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                logButton.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        imageView.startAnimation(animation);
         return view;
     }
 
