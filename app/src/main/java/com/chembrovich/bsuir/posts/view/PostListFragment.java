@@ -1,8 +1,10 @@
 package com.chembrovich.bsuir.posts.view;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -13,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.chembrovich.bsuir.posts.R;
 import com.chembrovich.bsuir.posts.presenter.PostListPresenter;
@@ -47,6 +50,13 @@ public class PostListFragment extends Fragment implements PostListFragmentInterf
         presenter = new PostListPresenter(this);
         presenter.makeRequestToGetPosts();
 
+        logButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.requestToWriteLogsToFile();
+            }
+        });
+
         ViewPager viewPager = view.findViewById(R.id.pager);
 
         viewPagerAdapter = new ViewPagerAdapter(this.getContext(), presenter);
@@ -56,7 +66,9 @@ public class PostListFragment extends Fragment implements PostListFragmentInterf
         tabLayout.setupWithViewPager(viewPager, true);
 
         ImageView imageView = view.findViewById(R.id.image);
+
         Animation animation = AnimationUtils.loadAnimation(this.getContext(), R.anim.rotate_image);
+
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -74,6 +86,7 @@ public class PostListFragment extends Fragment implements PostListFragmentInterf
             }
         });
         imageView.startAnimation(animation);
+
         return view;
     }
 
@@ -106,8 +119,20 @@ public class PostListFragment extends Fragment implements PostListFragmentInterf
         viewPagerAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        presenter.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }
+

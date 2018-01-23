@@ -32,13 +32,13 @@ public class ApiHandler {
                 try {
                     callback.onResponse(response);
                 } catch (Exception ex) {
-
+                    ex.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Post>> call, Throwable t) {
-
+                callback.onFailure();
             }
         });
     }
