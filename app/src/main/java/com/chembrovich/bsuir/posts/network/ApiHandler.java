@@ -1,6 +1,7 @@
 package com.chembrovich.bsuir.posts.network;
 
 import com.chembrovich.bsuir.posts.model.Post;
+import com.chembrovich.bsuir.posts.model.User;
 import com.chembrovich.bsuir.posts.network.interfaces.ApiCallbackInterface;
 import com.chembrovich.bsuir.posts.network.interfaces.PostApiInterface;
 
@@ -38,6 +39,20 @@ public class ApiHandler {
 
             @Override
             public void onFailure(Call<List<Post>> call, Throwable t) {
+                callback.onFailure();
+            }
+        });
+    }
+
+    public void getUserById(final ApiCallbackInterface<User> callback, int userId) {
+        postApi.getUserById(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                callback.onResponse(response);
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
                 callback.onFailure();
             }
         });

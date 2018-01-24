@@ -11,29 +11,32 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/custom_button"
         android:text="@string/log_button_title"/>
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:adjustViewBounds="true"
         android:src="@drawable/knuckles" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:background="#FFFFFF">
     </android.support.v4.view.ViewPager>
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_dots"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="15dp"
         app:tabBackground="@drawable/tab_selector"
         app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"/>
+        app:tabIndicatorHeight="0dp"
+        app:tabMaxWidth="12dp" />
 
 </LinearLayout>

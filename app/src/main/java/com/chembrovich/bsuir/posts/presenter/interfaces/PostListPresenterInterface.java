@@ -16,4 +16,6 @@ public interface PostListPresenterInterface {
     void requestToWriteLogsToFile();
 
     void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults);
+
+    void onPostClick(int pageNumber, int position);
 }

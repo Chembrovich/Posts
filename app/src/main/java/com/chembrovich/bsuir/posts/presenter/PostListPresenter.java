@@ -2,13 +2,11 @@ package com.chembrovich.bsuir.posts.presenter;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 
-import com.chembrovich.bsuir.posts.R;
 import com.chembrovich.bsuir.posts.model.Post;
 import com.chembrovich.bsuir.posts.network.ApiHandler;
 import com.chembrovich.bsuir.posts.network.interfaces.ApiCallbackInterface;
@@ -60,8 +58,14 @@ public class PostListPresenter implements PostListPresenterInterface {
         if (postList == null) {
             return 0;
         }
-        int id = postList.get(((pageNumber) * POSTS_COUNT_IN_PAGE) + position).getPostId();
-        return id;
+        return postList.get(((pageNumber) * POSTS_COUNT_IN_PAGE) + position).getPostId();
+    }
+
+    private int getUserId(int pageNumber, int position) {
+        if (postList == null) {
+            return 0;
+        }
+        return postList.get(((pageNumber) * POSTS_COUNT_IN_PAGE) + position).getUserId();
     }
 
     @Override
@@ -161,5 +165,10 @@ public class PostListPresenter implements PostListPresenterInterface {
                 }
             }
         }
+    }
+
+    @Override
+    public void onPostClick(int pageNumber, int position) {
+        view.onPostClick(getPostId(pageNumber, position), getUserId(pageNumber, position));
     }
 }

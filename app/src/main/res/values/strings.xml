@@ -3,4 +3,9 @@
     <string name="log_button_title">LOG</string>
     <string name="post_title">laudantium voluptate suscipit sunt enim enim</string>
     <string name="permission_denied">Permission denied!</string>
+    <string name="user_email">E-mail: %1$s</string>
+    <string name="user_website">Web-site: %1$s</string>
+    <string name="user_phone_number">Phone number: %1$s</string>
+    <string name="user_city">City: %1$s</string>
+    <string name="save_to_db">Save to DB</string>
 </resources>

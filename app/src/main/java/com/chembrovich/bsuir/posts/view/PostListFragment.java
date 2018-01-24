@@ -1,13 +1,13 @@
 package com.chembrovich.bsuir.posts.view;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,19 +24,12 @@ import com.chembrovich.bsuir.posts.view.interfaces.PostListFragmentInterface;
 
 public class PostListFragment extends Fragment implements PostListFragmentInterface {
 
-    private OnFragmentInteractionListener mListener;
+    private OnPostClickListener onPostClickListener;
     private PostListPresenterInterface presenter;
     private ViewPagerAdapter viewPagerAdapter;
 
     public PostListFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -90,28 +83,28 @@ public class PostListFragment extends Fragment implements PostListFragmentInterf
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnPostClickListener) {
+            onPostClickListener = (OnPostClickListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnPostClickListener");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        onPostClickListener = null;
     }
 
     @Override
@@ -129,9 +122,13 @@ public class PostListFragment extends Fragment implements PostListFragmentInterf
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void onPostClick(int postId, int userId) {
+        onPostClickListener.onPostClick(postId, userId);
+    }
+
+    interface OnPostClickListener {
+        void onPostClick(int postId, int userId);
     }
 
 }

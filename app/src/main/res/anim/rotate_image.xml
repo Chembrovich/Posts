@@ -14,4 +14,8 @@
         android:pivotY="50%"
         android:toXScale="1.0"
         android:toYScale="1.0" />
+    <alpha
+        android:duration="4000"
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0" />
 </set>

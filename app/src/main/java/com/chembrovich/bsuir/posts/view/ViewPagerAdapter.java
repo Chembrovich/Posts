@@ -84,7 +84,15 @@ class ViewPagerAdapter extends PagerAdapter {
         return page;
     }
 
-    private void instantiatePostView(View postView, int pageNumber, int postPositionInPage) {
+    private void instantiatePostView(View postView, final int pageNumber, final int postPositionInPage) {
+
+        postView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.onPostClick(pageNumber, postPositionInPage);
+            }
+        });
+
         TextView idTextView = postView.findViewById(R.id.post_id);
         TextView titleTextView = postView.findViewById(R.id.post_title);
 
