@@ -51,4 +51,27 @@ public class UserPresenter implements UserPresenterInterface {
 
         view.setUserInfoContainerVisible();
     }
+
+    @Override
+    public String getUserEmail() {
+        return user.getEmail();
+    }
+
+    @Override
+    public String getUserWebsite() {
+        String url = user.getWebsite();
+        if (!url.startsWith("http://") && !url.startsWith("https://"))
+            url = "http://" + url;
+        return url;
+    }
+
+    @Override
+    public String getUserPhoneNumber() {
+        return user.getPhone();
+    }
+
+    @Override
+    public String getUserCityCoordinates() {
+        return user.getAddress().getGeo().getLat() + "," + user.getAddress().getGeo().getLng();
+    }
 }

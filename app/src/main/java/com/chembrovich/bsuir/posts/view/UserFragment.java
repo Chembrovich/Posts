@@ -1,5 +1,7 @@
 package com.chembrovich.bsuir.posts.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -90,6 +92,42 @@ public class UserFragment extends Fragment implements UserFragmentInterface {
             @Override
             public void onClick(View view) {
                 showMessage("Hello, DB))))");
+            }
+        });
+
+        userEmailView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:" + presenter.getUserEmail()));
+                startActivity(intent);
+            }
+        });
+
+        userWebsiteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(presenter.getUserWebsite()));
+                startActivity(intent);
+            }
+        });
+
+        userPhoneNumberView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + presenter.getUserPhoneNumber()));
+                startActivity(intent);
+            }
+        });
+
+        userCityView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("geo:" + presenter.getUserCityCoordinates()));
+                startActivity(intent);
             }
         });
 
