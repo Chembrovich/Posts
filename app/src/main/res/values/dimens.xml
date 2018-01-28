@@ -3,5 +3,25 @@
     <dimen name="post_id_size">15sp</dimen>
     <dimen name="post_title_size">13sp</dimen>
     <dimen name="post_padding">5dp</dimen>
-    <dimen name="post_marging">3dp</dimen>
+    <dimen name="post_margin">3dp</dimen>
+    <dimen name="button_radius">7dp</dimen>
+    <dimen name="custom_button_padding">10dp</dimen>
+    <dimen name="default_tab_indicator_radius">1dp</dimen>
+    <dimen name="default_tab_indicator_thickness">2dp</dimen>
+    <dimen name="selected_tab_indicator_radius">0dp</dimen>
+    <dimen name="selected_tab_indicator_thickness">4dp</dimen>
+    <dimen name="max_tab_indicator_width">12dp</dimen>
+    <dimen name="tab_indicator_stripe_height">0dp</dimen>
+    <dimen name="tab_indicator_layout_height">15dp</dimen>
+    <dimen name="log_button_margin">5dp</dimen>
+    <dimen name="post_id_margin">30dp</dimen>
+    <dimen name="post_id_padding">5dp</dimen>
+    <dimen name="post_id_text_size">25sp</dimen>
+    <dimen name="user_name_text_size">20sp</dimen>
+    <dimen name="user_nick_text_size">18sp</dimen>
+    <dimen name="user_name_margin">15dp</dimen>
+    <dimen name="user_info_text_size">17sp</dimen>
+    <dimen name="user_info_margin">7dp</dimen>
+    <dimen name="save_db_button_margin">5dp</dimen>
+    <dimen name="post_id_shape_width">1dp</dimen>
 </resources>

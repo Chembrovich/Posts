@@ -26,6 +26,7 @@ public class PostListPresenter implements PostListPresenterInterface {
     private static final String PERMISSION_DENIED = "Permission denied!";
     private static final String EXTERNAL_STORAGE_NOT_WRITABLE = "External storage is not writable";
     private static final String CHECK_INTERNET = "Check internet connection!";
+    private static final String LOGS_FOLDER = "/PostsLogs";
 
     private ApiHandler apiHandler;
     private PostListFragmentInterface view;
@@ -102,7 +103,7 @@ public class PostListPresenter implements PostListPresenterInterface {
     private void writeLogsToFile() {
         if (isExternalStorageWritable()) {
 
-            File appDirectory = new File(Environment.getExternalStorageDirectory() + "/PostsLogs");
+            File appDirectory = new File(Environment.getExternalStorageDirectory() + LOGS_FOLDER);
             File logFile = new File(appDirectory, "logcat" + System.currentTimeMillis() + ".txt");
 
             if (!appDirectory.exists()) {

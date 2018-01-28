@@ -2,9 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape
-            android:innerRadius="1dp"
+            android:innerRadius="@dimen/default_tab_indicator_radius"
             android:shape="ring"
-            android:thickness="2dp"
+            android:thickness="@dimen/default_tab_indicator_thickness"
             android:useLevel="false">
             <solid android:color="@android:color/darker_gray"/>
         </shape>

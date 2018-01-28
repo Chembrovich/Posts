@@ -24,7 +24,6 @@ public final class DBContract {
         public static final String COLUMN_ZIPCODE = "zipcode";
         public static final String COLUMN_LATITUDE = "lat";
         public static final String COLUMN_LONGITUDE = "lng";
-
     }
 
     public static abstract class UserContract implements BaseColumns {

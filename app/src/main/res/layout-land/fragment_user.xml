@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:background="@drawable/user_profile">
 
         <TextView
@@ -19,37 +19,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/post_id_margin"
+            android:layout_marginEnd="@dimen/post_id_margin"
+            android:layout_marginStart="@dimen/post_id_margin"
             android:background="@drawable/post_id_background"
+            android:gravity="center"
             android:padding="@dimen/post_id_padding"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/post_id_text_size"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/user_name"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/user_name_margin"
+            android:textColor="@color/colorUserName"
+            android:textSize="@dimen/user_name_text_size" />
 
-            <TextView
-                android:id="@+id/user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/user_name_margin"
-                android:gravity="center"
-                android:textColor="@color/colorUserName"
-                android:textSize="@dimen/user_name_text_size" />
+        <TextView
+            android:id="@+id/user_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/colorUserNick"
+            android:textSize="@dimen/user_nick_text_size"
+            android:textStyle="italic" />
 
-            <TextView
-                android:id="@+id/user_nick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/colorUserNick"
-                android:textSize="@dimen/user_nick_text_size"
-                android:textStyle="italic" />
-
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -57,7 +53,7 @@
         android:id="@+id/user_info_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:gravity="center|start"
         android:orientation="vertical"
         android:visibility="invisible">

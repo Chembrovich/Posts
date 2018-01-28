@@ -27,6 +27,6 @@ public class MainActivity extends AppCompatActivity implements PostListFragment.
         UserFragment userFragment = UserFragment.newInstance(postId, userId);
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, userFragment).addToBackStack(null).commit(); //replace
+                .replace(R.id.fragment_container, userFragment).addToBackStack(null).commit(); //replace
     }
 }

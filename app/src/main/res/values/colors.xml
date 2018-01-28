@@ -6,4 +6,9 @@
     <color name="colorPostBackground">#ff5252</color>
     <color name="colorPostText">#000000</color>
     <color name="colorSelectedDot">#263238</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorUserName">#263238</color>
+    <color name="colorUserNick">#424242</color>
+    <color name="colorUserInfo">#1a237e</color>
+    <color name="colorButton">#ef5350</color>
 </resources>

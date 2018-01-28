@@ -1,12 +1,16 @@
 package com.chembrovich.bsuir.posts.presenter;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 
 import com.chembrovich.bsuir.posts.database.DBContract.CompanyContract;
 import com.chembrovich.bsuir.posts.database.DBContract.UserContract;
 import com.chembrovich.bsuir.posts.database.DBContract.AddressContract;
 import com.chembrovich.bsuir.posts.database.DBHelper;
+import com.chembrovich.bsuir.posts.model.Address;
+import com.chembrovich.bsuir.posts.model.Company;
 import com.chembrovich.bsuir.posts.model.User;
 import com.chembrovich.bsuir.posts.network.ApiHandler;
 import com.chembrovich.bsuir.posts.network.interfaces.ApiCallbackInterface;
@@ -18,6 +22,11 @@ import retrofit2.Response;
 public class UserPresenter implements UserPresenterInterface {
 
     private static final String CHECK_INTERNET = "Check your internet connection!";
+    private static final String USER_IS_EXISTS = "This user is already exists in DB";
+    private static final String USER_IS_ADDED = "New user is added to DB";
+
+    private static final String equalsSelectionStatement = " = ? ";
+    private final static String andSelectionStatement = " AND ";
 
     private int userId;
     private User user;
@@ -50,14 +59,18 @@ public class UserPresenter implements UserPresenterInterface {
     }
 
     private void setUserViewData(User user) {
-        view.setUserName(user.getName());
-        view.setUserNick(user.getUsername());
-        view.setUserEmail(user.getEmail());
-        view.setUserWebsite(user.getWebsite());
-        view.setUserPhoneNumber(user.getPhone());
-        view.setUserCity(user.getAddress().getCity());
+        if (view != null) {
 
-        view.setUserInfoContainerVisible();
+            view.setUserName(user.getName());
+            view.setUserNick(user.getUsername());
+            view.setUserEmail(user.getEmail());
+            view.setUserWebsite(user.getWebsite());
+            view.setUserPhoneNumber(user.getPhone());
+            view.setUserCity(user.getAddress().getCity());
+
+            view.setUserInfoContainerVisible();
+
+        }
     }
 
     @Override
@@ -88,30 +101,33 @@ public class UserPresenter implements UserPresenterInterface {
 
     @Override
     public void saveUserInDB() {
-        DBHelper dbHelper = new DBHelper(view.getViewContext());
-        db = dbHelper.getWritableDatabase();
+        DBTask dbTask = new DBTask();
+        dbTask.execute();
+    }
 
-
+    private long insertUserCompanyInDB(SQLiteDatabase db, Company company) {
         ContentValues values = new ContentValues();
-        values.put(CompanyContract.COLUMN_NAME, user.getCompany().getName());
-        values.put(CompanyContract.COLUMN_CATCH_PHRASE, user.getCompany().getCatchPhrase());
-        values.put(CompanyContract.COLUMN_BS, user.getCompany().getBs());
+        values.put(CompanyContract.COLUMN_NAME, company.getName());
+        values.put(CompanyContract.COLUMN_CATCH_PHRASE, company.getCatchPhrase());
+        values.put(CompanyContract.COLUMN_BS, company.getBs());
 
-// Insert the new row, returning the primary key value of the new row
-        long companyId = db.insert(CompanyContract.TABLE_NAME, null, values);
+        return db.insert(CompanyContract.TABLE_NAME, null, values);
+    }
 
-        values = new ContentValues();
-        values.put(AddressContract.COLUMN_STREET, user.getAddress().getStreet());
-        values.put(AddressContract.COLUMN_SUITE, user.getAddress().getSuite());
-        values.put(AddressContract.COLUMN_CITY, user.getAddress().getCity());
-        values.put(AddressContract.COLUMN_ZIPCODE, user.getAddress().getZipcode());
-        values.put(AddressContract.COLUMN_LATITUDE, user.getAddress().getGeo().getLat());
-        values.put(AddressContract.COLUMN_LONGITUDE, user.getAddress().getGeo().getLng());
+    private long insertUserAddressInDB(SQLiteDatabase db, Address address) {
+        ContentValues values = new ContentValues();
+        values.put(AddressContract.COLUMN_STREET, address.getStreet());
+        values.put(AddressContract.COLUMN_SUITE, address.getSuite());
+        values.put(AddressContract.COLUMN_CITY, address.getCity());
+        values.put(AddressContract.COLUMN_ZIPCODE, address.getZipcode());
+        values.put(AddressContract.COLUMN_LATITUDE, address.getGeo().getLat());
+        values.put(AddressContract.COLUMN_LONGITUDE, address.getGeo().getLng());
 
-// Insert the new row, returning the primary key value of the new row
-        long addressId = db.insert(AddressContract.TABLE_NAME, null, values);
+        return db.insert(AddressContract.TABLE_NAME, null, values);
+    }
 
-        values = new ContentValues();
+    private long insertUserInDB(SQLiteDatabase db, User user, long addressId, long companyId) {
+        ContentValues values = new ContentValues();
         values.put(UserContract._ID, user.getId());
         values.put(UserContract.COLUMN_NAME, user.getName());
         values.put(UserContract.COLUMN_USERNAME, user.getUsername());
@@ -121,9 +137,105 @@ public class UserPresenter implements UserPresenterInterface {
         values.put(UserContract.COLUMN_WEBSITE, user.getWebsite());
         values.put(UserContract.COLUMN_COMPANY_ID, companyId);
 
-// Insert the new row, returning the primary key value of the new row
-        long userId = db.insert(UserContract.TABLE_NAME, null, values);
+        return db.insert(UserContract.TABLE_NAME, null, values);
+    }
 
-        db.close();
+    private long selectCompanyIdFromDB(Company company) {
+        String[] projection = {CompanyContract._ID};
+
+        String selection = CompanyContract.COLUMN_NAME + equalsSelectionStatement;
+        String[] selectionArgs = new String[]{company.getName()};
+
+        Cursor cursor = db.query(
+                CompanyContract.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        long companyId = -1;
+
+        if (cursor.moveToFirst()) {
+            companyId = cursor.getLong(cursor.getColumnIndex(CompanyContract._ID));
+        }
+
+        cursor.close();
+
+        return companyId;
+    }
+
+    private long selectAddressIdFromDB(Address address) {
+        String[] projection = {AddressContract._ID};
+
+        String selection = AddressContract.COLUMN_LONGITUDE + equalsSelectionStatement +
+                andSelectionStatement + AddressContract.COLUMN_LATITUDE + equalsSelectionStatement;
+        String[] selectionArgs = new String[]{address.getGeo().getLng(), address.getGeo().getLat()};
+
+        Cursor cursor = db.query(
+                AddressContract.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        long addressId = -1;
+
+        if (cursor.moveToFirst()) {
+            addressId = cursor.getLong(cursor.getColumnIndex(AddressContract._ID));
+        }
+
+        cursor.close();
+
+        return addressId;
+    }
+
+    private class DBTask extends AsyncTask<Void, Void, Long> {
+        DBHelper dbHelper;
+
+        @Override
+        protected void onPreExecute() {
+            dbHelper = new DBHelper(view.getViewContext());
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Long doInBackground(Void... voids) {
+            db = dbHelper.getWritableDatabase();
+
+            long companyId = insertUserCompanyInDB(db, user.getCompany());
+
+            if (companyId == -1) {
+                companyId = selectCompanyIdFromDB(user.getCompany());
+            }
+
+            long addressId = insertUserAddressInDB(db, user.getAddress());
+
+            if (addressId == -1) {
+                addressId = selectAddressIdFromDB(user.getAddress());
+            }
+
+            long userId = insertUserInDB(db, user, addressId, companyId);
+
+            return userId;
+        }
+
+        @Override
+        protected void onPostExecute(Long userId) {
+            db.close();
+
+            if (userId == -1) {
+                view.showMessage(USER_IS_EXISTS);
+            } else {
+                view.showMessage(USER_IS_ADDED);
+            }
+
+            super.onPostExecute(userId);
+        }
     }
 }
