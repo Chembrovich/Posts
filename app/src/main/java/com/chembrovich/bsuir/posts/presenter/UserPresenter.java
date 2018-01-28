@@ -1,5 +1,12 @@
 package com.chembrovich.bsuir.posts.presenter;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.chembrovich.bsuir.posts.database.DBContract.CompanyContract;
+import com.chembrovich.bsuir.posts.database.DBContract.UserContract;
+import com.chembrovich.bsuir.posts.database.DBContract.AddressContract;
+import com.chembrovich.bsuir.posts.database.DBHelper;
 import com.chembrovich.bsuir.posts.model.User;
 import com.chembrovich.bsuir.posts.network.ApiHandler;
 import com.chembrovich.bsuir.posts.network.interfaces.ApiCallbackInterface;
@@ -17,6 +24,7 @@ public class UserPresenter implements UserPresenterInterface {
 
     private UserFragmentInterface view;
     private ApiHandler apiHandler;
+    private SQLiteDatabase db;
 
     public UserPresenter(UserFragmentInterface view, int userId) {
         this.view = view;
@@ -59,9 +67,12 @@ public class UserPresenter implements UserPresenterInterface {
 
     @Override
     public String getUserWebsite() {
+        final String httpString = "http://";
+        final String httpsString = "https://";
+
         String url = user.getWebsite();
-        if (!url.startsWith("http://") && !url.startsWith("https://"))
-            url = "http://" + url;
+        if (!url.startsWith(httpString) && !url.startsWith(httpsString))
+            url = httpString + url;
         return url;
     }
 
@@ -73,5 +84,46 @@ public class UserPresenter implements UserPresenterInterface {
     @Override
     public String getUserCityCoordinates() {
         return user.getAddress().getGeo().getLat() + "," + user.getAddress().getGeo().getLng();
+    }
+
+    @Override
+    public void saveUserInDB() {
+        DBHelper dbHelper = new DBHelper(view.getViewContext());
+        db = dbHelper.getWritableDatabase();
+
+
+        ContentValues values = new ContentValues();
+        values.put(CompanyContract.COLUMN_NAME, user.getCompany().getName());
+        values.put(CompanyContract.COLUMN_CATCH_PHRASE, user.getCompany().getCatchPhrase());
+        values.put(CompanyContract.COLUMN_BS, user.getCompany().getBs());
+
+// Insert the new row, returning the primary key value of the new row
+        long companyId = db.insert(CompanyContract.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(AddressContract.COLUMN_STREET, user.getAddress().getStreet());
+        values.put(AddressContract.COLUMN_SUITE, user.getAddress().getSuite());
+        values.put(AddressContract.COLUMN_CITY, user.getAddress().getCity());
+        values.put(AddressContract.COLUMN_ZIPCODE, user.getAddress().getZipcode());
+        values.put(AddressContract.COLUMN_LATITUDE, user.getAddress().getGeo().getLat());
+        values.put(AddressContract.COLUMN_LONGITUDE, user.getAddress().getGeo().getLng());
+
+// Insert the new row, returning the primary key value of the new row
+        long addressId = db.insert(AddressContract.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(UserContract._ID, user.getId());
+        values.put(UserContract.COLUMN_NAME, user.getName());
+        values.put(UserContract.COLUMN_USERNAME, user.getUsername());
+        values.put(UserContract.COLUMN_EMAIL, user.getEmail());
+        values.put(UserContract.COLUMN_ADDRESS_ID, addressId);
+        values.put(UserContract.COLUMN_PHONE, user.getPhone());
+        values.put(UserContract.COLUMN_WEBSITE, user.getWebsite());
+        values.put(UserContract.COLUMN_COMPANY_ID, companyId);
+
+// Insert the new row, returning the primary key value of the new row
+        long userId = db.insert(UserContract.TABLE_NAME, null, values);
+
+        db.close();
     }
 }

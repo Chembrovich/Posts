@@ -1,5 +1,6 @@
 package com.chembrovich.bsuir.posts.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -91,7 +92,7 @@ public class UserFragment extends Fragment implements UserFragmentInterface {
         saveToDbBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showMessage("Hello, DB))))");
+                presenter.saveUserInDB();
             }
         });
 
@@ -172,5 +173,10 @@ public class UserFragment extends Fragment implements UserFragmentInterface {
     @Override
     public void showMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public Context getViewContext() {
+        return getContext();
     }
 }

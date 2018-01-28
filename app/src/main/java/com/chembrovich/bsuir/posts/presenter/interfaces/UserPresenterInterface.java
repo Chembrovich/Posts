@@ -10,4 +10,6 @@ public interface UserPresenterInterface {
     String getUserPhoneNumber();
 
     String getUserCityCoordinates();
+
+    void saveUserInDB();
 }

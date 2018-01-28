@@ -1,5 +1,7 @@
 package com.chembrovich.bsuir.posts.view.interfaces;
 
+import android.content.Context;
+
 public interface UserFragmentInterface {
     void showMessage(String message);
 
@@ -16,4 +18,6 @@ public interface UserFragmentInterface {
     void setUserCity(String city);
 
     void setUserInfoContainerVisible();
+
+    Context getViewContext();
 }
