@@ -1,98 +1,109 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    android:clickable="true"
     android:orientation="vertical"
-    android:weightSum="5"
     tools:context="com.chembrovich.bsuir.posts.view.UserFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="@drawable/user_profile">
-
-        <TextView
-            android:id="@+id/user_post_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/post_id_margin"
-            android:layout_marginStart="@dimen/post_id_margin"
-            android:background="@drawable/post_id_background"
-            android:gravity="center"
-            android:padding="@dimen/post_id_padding"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/post_id_text_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/user_name_margin"
-            android:textColor="@color/colorUserName"
-            android:textSize="@dimen/user_name_text_size" />
-
-        <TextView
-            android:id="@+id/user_nick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/colorUserNick"
-            android:textSize="@dimen/user_nick_text_size"
-            android:textStyle="italic" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/user_info_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:gravity="center|start"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:clickable="true"
         android:orientation="vertical"
-        android:visibility="invisible">
+        android:weightSum="5">
 
-        <TextView
-            android:id="@+id/user_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/user_info_margin"
-            android:text="@string/user_email"
-            android:textColor="@color/colorUserInfo"
-            android:textSize="@dimen/user_info_text_size" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@drawable/user_profile">
 
-        <TextView
-            android:id="@+id/user_website"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/user_info_margin"
-            android:text="@string/user_website"
-            android:textColor="@color/colorUserInfo"
-            android:textSize="@dimen/user_info_text_size" />
+            <TextView
+                android:id="@+id/user_post_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/post_id_margin"
+                android:layout_marginStart="@dimen/post_id_margin"
+                android:background="@drawable/post_id_background"
+                android:gravity="center"
+                android:padding="@dimen/post_id_padding"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/post_id_text_size"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/user_phone_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/user_info_margin"
-            android:text="@string/user_phone_number"
-            android:textColor="@color/colorUserInfo"
-            android:textSize="@dimen/user_info_text_size" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/user_city"
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/user_name_margin"
+                    android:textColor="@color/colorUserName"
+                    android:textSize="@dimen/user_name_text_size" />
+
+                <TextView
+                    android:id="@+id/user_nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorUserNick"
+                    android:textSize="@dimen/user_nick_text_size"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/user_info_container"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/user_info_margin"
-            android:text="@string/user_city"
-            android:textColor="@color/colorUserInfo"
-            android:textSize="@dimen/user_info_text_size" />
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="center|start"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <TextView
+                android:id="@+id/user_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/user_info_margin"
+                android:text="@string/user_email"
+                android:textColor="@color/colorUserInfo"
+                android:textSize="@dimen/user_info_text_size" />
+
+            <TextView
+                android:id="@+id/user_website"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/user_info_margin"
+                android:text="@string/user_website"
+                android:textColor="@color/colorUserInfo"
+                android:textSize="@dimen/user_info_text_size" />
+
+            <TextView
+                android:id="@+id/user_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/user_info_margin"
+                android:text="@string/user_phone_number"
+                android:textColor="@color/colorUserInfo"
+                android:textSize="@dimen/user_info_text_size" />
+
+            <TextView
+                android:id="@+id/user_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/user_info_margin"
+                android:text="@string/user_city"
+                android:textColor="@color/colorUserInfo"
+                android:textSize="@dimen/user_info_text_size" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -106,4 +117,4 @@
         android:text="@string/save_to_db"
         android:textColor="@color/colorWhite" />
 
-</LinearLayout>
+</FrameLayout>

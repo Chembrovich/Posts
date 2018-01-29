@@ -74,9 +74,9 @@ public class UserFragment extends Fragment implements UserFragmentInterface {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
 
         TextView postIdView = view.findViewById(R.id.user_post_id);
-        postIdView.setText(String.format(Locale.getDefault(), "%d", postId)); /*String.format(Locale.getDefault(),"%d",*/
+        postIdView.setText(String.format(Locale.getDefault(), "%d", postId));
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Contact #" + Integer.toString(userId));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.contact_user_id, Integer.toString(userId)));
 
         userInfoContainer = view.findViewById(R.id.user_info_container);
 

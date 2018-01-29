@@ -19,9 +19,9 @@
     <dimen name="post_id_text_size">25sp</dimen>
     <dimen name="user_name_text_size">20sp</dimen>
     <dimen name="user_nick_text_size">18sp</dimen>
-    <dimen name="user_name_margin">15dp</dimen>
+    <dimen name="user_name_margin">5dp</dimen>
     <dimen name="user_info_text_size">17sp</dimen>
-    <dimen name="user_info_margin">7dp</dimen>
+    <dimen name="user_info_margin">5dp</dimen>
     <dimen name="save_db_button_margin">5dp</dimen>
     <dimen name="post_id_shape_width">1dp</dimen>
 </resources>

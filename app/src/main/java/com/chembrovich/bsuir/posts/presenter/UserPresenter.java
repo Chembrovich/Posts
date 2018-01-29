@@ -24,6 +24,7 @@ public class UserPresenter implements UserPresenterInterface {
     private static final String CHECK_INTERNET = "Check your internet connection!";
     private static final String USER_IS_EXISTS = "This user is already exists in DB";
     private static final String USER_IS_ADDED = "New user is added to DB";
+    private static final String USER_NOT_LOADED = "Waiting for loading user info.";
 
     private static final String equalsSelectionStatement = " = ? ";
     private final static String andSelectionStatement = " AND ";
@@ -60,7 +61,6 @@ public class UserPresenter implements UserPresenterInterface {
 
     private void setUserViewData(User user) {
         if (view != null) {
-
             view.setUserName(user.getName());
             view.setUserNick(user.getUsername());
             view.setUserEmail(user.getEmail());
@@ -69,7 +69,6 @@ public class UserPresenter implements UserPresenterInterface {
             view.setUserCity(user.getAddress().getCity());
 
             view.setUserInfoContainerVisible();
-
         }
     }
 
@@ -101,8 +100,14 @@ public class UserPresenter implements UserPresenterInterface {
 
     @Override
     public void saveUserInDB() {
-        DBTask dbTask = new DBTask();
-        dbTask.execute();
+        if (user != null) {
+            DBTask dbTask = new DBTask();
+            dbTask.execute();
+        } else {
+            view.showMessage(USER_NOT_LOADED);
+        }
+
+
     }
 
     private long insertUserCompanyInDB(SQLiteDatabase db, Company company) {
@@ -220,9 +225,7 @@ public class UserPresenter implements UserPresenterInterface {
                 addressId = selectAddressIdFromDB(user.getAddress());
             }
 
-            long userId = insertUserInDB(db, user, addressId, companyId);
-
-            return userId;
+            return insertUserInDB(db, user, addressId, companyId);
         }
 
         @Override
